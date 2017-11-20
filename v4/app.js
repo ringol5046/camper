@@ -9,7 +9,7 @@ var seedDB = require("./seeds");
 var app = express();
 
 seedDB();
-mongoose.connect("mongodb://localhost/yelp_camp_v3");
+mongoose.connect("mongodb://localhost/yelp_camp_v4");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 

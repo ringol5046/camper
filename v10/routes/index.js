@@ -1,7 +1,6 @@
 var express = require("express");
-var router = express.Router();
 var passport = require("passport");
-
+var router = express.Router();
 var User = require("../models/user");
 
 router.get('/', (req, res) => {
@@ -9,7 +8,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/register', (req, res) => {
-   res.render('auth/register'); 
+   res.render('register'); 
 });
 
 router.post('/register', (req, res) => {
@@ -17,7 +16,7 @@ router.post('/register', (req, res) => {
     User.register(newUser, req.body.password, (err, user) => {
         if(err) {
             console.log(err);
-            return res.redirect('/register');
+            return res.render('register');
         }
         passport.authenticate('local')(req, res, () => {
             res.redirect('/campgrounds');
@@ -26,13 +25,13 @@ router.post('/register', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    res.render('auth/login');
+    res.render('login');
 });
 
 router.post('/login', passport.authenticate('local', 
 {
     successRedirect: '/campgrounds',
-    failureRedirect: 'auth/login'
+    failureRedirect: '/login'
 }), (req, res) => {
 });
 
@@ -45,7 +44,7 @@ function isLoggedIn(req, res, next) {
     if(req.isAuthenticated()) {
         return next();
     }
-    res.render('auth/login');
+    res.redirect('/login');
 }
 
 module.exports = router;
