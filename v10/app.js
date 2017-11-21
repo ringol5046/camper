@@ -17,7 +17,7 @@ var seedDB = require("./seeds");
 var app = express();
 
 //seedDB();
-mongoose.connect("mongodb://localhost/yelp_camp_v9");
+mongoose.connect("mongodb://localhost/yelp_camp_v10");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"))

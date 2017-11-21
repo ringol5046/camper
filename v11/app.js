@@ -3,6 +3,7 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var passport = require("passport");
 var localStrategy = require("passport-local");
+var methodOverride = require("method-override");
 var flash = require("connect-flash");
 
 var campgroundRoutes = require("./routes/campgrounds");
@@ -20,6 +21,8 @@ var app = express();
 mongoose.connect("mongodb://localhost/yelp_camp_v11");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"))
+app.use(flash());
 app.set('view engine', 'ejs');
 
 //===========================
@@ -41,6 +44,8 @@ passport.use(new localStrategy(User.authenticate()));
 
 app.use(function(req, res, next) {
    res.locals.currentUser = req.user;
+   res.locals.error = req.flash('error');
+   res.locals.success = req.flash('success');
    next();
 });
 
